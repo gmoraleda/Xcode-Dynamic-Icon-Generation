@@ -2,12 +2,23 @@
 #!/bin/bash
 
 #
+# Helpers
+#
+function installImageMagick() {
+	curl https://imagemagick.org/download/binaries/ImageMagick-x86_64-apple-darwin17.7.0.tar.gz --output imagemagick.tar.gz
+	mkdir Tools
+	tar xvzf imagemagick.tar.gz -C Tools/
+	rm imagemagick.tar.gz
+}
+
+#
 # Preflight: Check if tools are installed
 #
-
 export MAGICK_HOME="${SRCROOT}/Tools/ImageMagick-7.0.8"
+export PATH="$MAGICK_HOME/bin:$PATH"
+export DYLD_LIBRARY_PATH="$MAGICK_HOME/lib/"
 
-if hash $MAGICK_HOME/bin/identify 2>/dev/null && hash $MAGICK_HOME/bin/convert 2>/dev/null; then
+if hash identify 2>/dev/null && hash convert 2>/dev/null; then
 	echo "----------------------------------	"
 	echo "ImageMagick already installed ✅		"
 	echo "----------------------------------	"
@@ -19,8 +30,6 @@ else
 	installImageMagick
 fi
 
-export PATH="$MAGICK_HOME/bin:$PATH"
-export DYLD_LIBRARY_PATH="$MAGICK_HOME/lib/"
 
 #
 # Access AppIcon
@@ -36,6 +45,10 @@ CONTENTS_JSON="${BASE_ICONS_DIR}/Contents.json"
 version=`/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "${INFOPLIST_FILE}"`
 buildNumber=`/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "${INFOPLIST_FILE}"`
 
+# Modify accordingly to the project configuration
+production_configurations=("Beta", "Release") 
+staging_configurations=("Debug", "Alpha")
+
 caption="${CONFIGURATION}\n${version}\n($buildNumber)"
 echo $caption
 
@@ -50,7 +63,7 @@ width=`identify -format %w ${ICON_PATH}`
 
 height=$((width * 30 / 100))
 
-if [ "${CONFIGURATION}" != "ReleaseProduction" ]; then
+if [ "${CONFIGURATION}" != "Release" ]; then
 
 width=`identify -format %w ${ICON_PATH}`
 height=`identify -format %h ${ICON_PATH}`
@@ -63,10 +76,6 @@ point_size=$(((14 * $width) / 100))
 # Band color
 #
 band_color='rgba(0,0,0,0.8)'
-
-production_configurations=("BetaProduction", "AlphaProduction", "DebugProduction", "ReleaseProduction")
-staging_configurations=("BetaStaging", "AlphaStaging", "DebugStaging")
-
 
 if [[ " ${production_configurations[@]} " =~ "${CONFIGURATION}" ]]; then
 	band_color='rgba(224,40,40,0.8)'
@@ -108,13 +117,3 @@ IFS=$'\n'
 for (( i=0; i<ICONS_COUNT; i++ )); do
 generateIcons "$BASE_ICONS_DIR/${ICONS[$i]}"
 done
-
-#
-# Helpers
-#
-function installImageMagick() {
-curl https://imagemagick.org/download/binaries/ImageMagick-x86_64-apple-darwin17.7.0.tar.gz --output imagemagick.tar.gz
-mkdir Tools
-tar xvzf imagemagick.tar.gz -C Tools/
-rm imagemagick.tar.gz
-}
