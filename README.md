@@ -1,5 +1,5 @@
 # Xcode-Dynamic-Icon-Generation
-Test project to showcase the AppIcon generation during build time.
+Test project to showcase the AppIcon generation during build time, using ImageMagick.
 The script includes configuration, version and build number in a ribbon:
 
 ![](Resources/icons.png "Screenshot")
