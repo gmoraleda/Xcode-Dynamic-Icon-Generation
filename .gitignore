@@ -22,6 +22,9 @@ xcuserdata/
 *.xccheckout
 *.xcscmblueprint
 
+## Tools (ImageMagick)
+Tools/
+
 ## Obj-C/Swift specific
 *.hmap
 *.ipa
