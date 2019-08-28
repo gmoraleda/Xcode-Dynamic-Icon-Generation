@@ -6,7 +6,7 @@ The script includes configuration, version and build number in a ribbon:
 
 It tints the ribbon black or red depending if the configuration belongs to `staging_configurations` or `production_configurations`. The idea behind is to quickly recognize a build configured to work against a production environment, e.g.
 
-There are three schemes targeting the different configurations (Debug, Beta, Release).
+The project contains three schemes targeting the different configurations (Debug, Beta, Release) to test the different outputs.
 
 ## License
 
