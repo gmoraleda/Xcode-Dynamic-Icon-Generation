@@ -5,10 +5,7 @@
 # Helpers
 #
 function installImageMagick() {
-	curl https://imagemagick.org/download/binaries/ImageMagick-x86_64-apple-darwin17.7.0.tar.gz --output imagemagick.tar.gz
-	mkdir Tools
-	tar xvzf imagemagick.tar.gz -C Tools/
-	rm imagemagick.tar.gz
+	brew install imagemagick ghostscript
 }
 
 #
@@ -42,12 +39,12 @@ CONTENTS_JSON="${BASE_ICONS_DIR}/Contents.json"
 #
 # Read Read configuration, version and build number
 #
-version=`/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "${INFOPLIST_FILE}"`
+version="${MARKETING_VERSION}"
 buildNumber=`/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "${INFOPLIST_FILE}"`
 
 # Modify accordingly to the project configuration
-production_configurations=("Beta", "Release") 
-staging_configurations=("Debug", "Alpha")
+production_configurations=("Release") 
+staging_configurations=("Debug", "Alpha", "Beta")
 
 caption="${CONFIGURATION}\n${version}\n($buildNumber)"
 echo $caption
