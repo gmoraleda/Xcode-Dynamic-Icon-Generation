@@ -40,8 +40,8 @@ version="${MARKETING_VERSION}"
 buildNumber=`/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "${INFOPLIST_FILE}"`
 
 # Modify accordingly to the project configuration
-production_configurations=("Release") 
-staging_configurations=("Debug", "Alpha", "Beta")
+production_configurations=("Release", "Beta") 
+staging_configurations=("Debug", "Alpha")
 
 caption="${CONFIGURATION}\n${version}\n($buildNumber)"
 echo $caption
