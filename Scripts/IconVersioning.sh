@@ -11,9 +11,6 @@ function installImageMagick() {
 #
 # Preflight: Check if tools are installed
 #
-export MAGICK_HOME="${SRCROOT}/Tools/ImageMagick-7.0.8"
-export PATH="$MAGICK_HOME/bin:$PATH"
-export DYLD_LIBRARY_PATH="$MAGICK_HOME/lib/"
 
 if hash identify 2>/dev/null && hash convert 2>/dev/null; then
 	echo "----------------------------------	"
