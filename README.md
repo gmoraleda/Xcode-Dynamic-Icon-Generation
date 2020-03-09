@@ -1,3 +1,5 @@
+<p align="center"><img alt="APM badge" src="https://img.shields.io/badge/license-MIT-green"></p>
+
 # Xcode-Dynamic-Icon-Generation
 Test project to showcase the AppIcon generation during build time, using ImageMagick.
 The script includes configuration, version and build number in a ribbon:
